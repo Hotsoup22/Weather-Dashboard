@@ -13,12 +13,25 @@
 <body>
     <h1>weather-test</h1>
     <div class="card" style="width: 18rem;">
-        <!-- <img src="..." class="card-img-top" alt="..."> -->
         <div class="card-body">
           <h5 class="card-title">Search for a City:</h5>
-          <input type="text" id="searchCity" placeholder="City Name:">
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <form id="user-form" class="card-body">
+            <label class="form-label" for="username">Username</label>
+            <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+            <button type="submit" class="cityBtn">Get city</button>
+          </form>
+        </div>
+      </div>
+      <div class='card weather'style="width: 18rem;">
+        <h5 class="card-title cityTitle">Search for a City:</h5>
+        <div class="card-body mainTempL ">
+       
+        </div>
+      </div>
+      <div class='card forecast'style="width: 18rem;">
+        <h5 class="card-title cityTitle">Forcast:</h5>
+        <div class="card-body forecastBody">
+       
         </div>
       </div>
 </body>
@@ -27,3 +40,15 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="./assets/script.js"></script>
 </html> 
+<!-- GIVEN a weather dashboard with form inputs
+WHEN I search for a city
+THEN I am presented with current and future conditions for that city and that city is added to the search history
+WHEN I view current weather conditions for that city
+THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+WHEN I view the UV index
+THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+WHEN I view future weather conditions for that city
+THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+WHEN I click on a city in the search history
+THEN I am again presented with current and future conditions for that city
+``` -->
