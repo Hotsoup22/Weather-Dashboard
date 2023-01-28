@@ -1,160 +1,180 @@
-
-var searchCityBtn = document.querySelector(".cityBtn");
-var city = document.querySelector("#city");
-var cityTitle = document.querySelector(".cityTitle");
-weatherCard = document.querySelector("weather");
-var url = "https://api.openweathermap.org/data/2.5/";
+const url = "https://api.openweathermap.org/data/2.5/";
 const APIKey = "0a3eb332892c14227c97ed8390936741";
+//Query Selectors
+const searchCityBtn = document.querySelector(".cityBtn");
+const city = document.querySelector("#city");
+const cityTitle = document.querySelector(".cityTitle");
+const currentWeatherDiv = document.querySelector(".currentWeatherBody");
+const currentWeatherUl = document.querySelector(".currentWeatherUl");
+const currentWeatherLi = document.querySelector(".currentWeatherLi");
 
-function setCityStorage(cityKey) {
-  cityKey = localStorage.setItem("cityKey", userCity);
-  cityKey = localStorage.getItem("cityKey");
-  console.log("city key logged ", cityKey);
-  return cityKey;
+//localstorage city name
+function setCityStorage(cityName) {
+  cityName = localStorage.setItem("cityName", userCity);
+  cityName = localStorage.getItem("cityName");
 }
 
-var getCity = function (event) {
-  event.preventDefault();
-  console.log("getcity");
-
-  userCity = city.value.trim();
-
-  if (userCity) {
-    setCityStorage();
-    getWeather(userCity);
-
-  } else {
-    alert("Please enter a City");
-  }
-};
-
-var getWeather = function (userCity) {
-  //var apiUrl = 'https://api.github.com/users/' + user + '/repos';
-  
-
-  const queryUrl =
-    url  +
-    "weather?q="+
-    userCity +
-    "&appid=" +
-    APIKey +
-    "&units=imperial";
+//Geocoding API Call
+const GET_CityCoordinates = function (userCity) {
+  const queryUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + userCity + '&limit=1' + '&appid=' + APIKey;
   fetch(queryUrl)
     .then(function (response) {
       if (response.ok) {
-        // console.log(response);
         response.json().then(function (data) {
-          // console.log(data);
-          displayWeather(data, city);
-          var cityLat = `lat=${data.coord.lat}`;
-          var cityLon = `lon=${data.coord.lon}`;
-          console.log(cityLat, cityLon);
-          searchApiByCoordinates(cityLat, cityLon);
+          let lat = `lat=${data[0].lat}`;
+          let lon = `lon=${data[0].lon}`;
+          searchApiByCoordinates(lat, lon);
         });
-        
       } else {
         alert("Error: " + response.statusText);
       }
     })
     .catch(function (error) {
-      alert("Unable to connect to GitHub");
+      alert("Unable to connect to GitHub. Geocoding API Call Failed", error);
     });
 };
 
- function searchApiByCoordinates(lat, lon) {
-   console.log("seachApibyCoord")
-   var locQueryUrl = `${url}onecall?${lat}&${lon}&exclude=minutely,hourly&units=imperial&appid=${APIKey}`;
-
-   fetch(locQueryUrl)
-   
-       .then(function (response) {
-          if(response.ok) {
-             console.log(" found")
-             response.json().then(function (data) {
-             console.log(data)
-             
-             var uvi = data.daily[0].uvi
-             cityTitle.textContent = userCity;
-
-             const resultCard = document.createElement("div");
-             resultCard.classList.add("card", "bg-light", "text-dark", "mb-3", "p-3");
-           
-             const resultBody = document.createElement("div");
-             resultBody.classList.add("card-body");
-             resultCard.append(resultBody);
-           
-             const titleEl = document.createElement("h3");
-             titleEl.textContent = `City: ${userCity}`;
-           
-             const bodyContentEl = document.createElement("p");
-             bodyContentEl.innerHTML = `Uvi Rating: `+  `${uvRating(uvi)}F<br>`
-             resultBody.append(titleEl, bodyContentEl);
-             forecastBody.append(resultCard);
-             
-          }); 
-        } else {
+//Api call current weather data
+function searchApiByCoordinates(lat, lon) {
+  const locQueryUrl = `${url}weather?${lat}&${lon}&exclude=minutely,hourly&units=imperial&appid=${APIKey}`;
+  fetch(locQueryUrl)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayCurrentWeather(data)
+        });
+      } else {
         alert("Error: " + response.statusText);
       }
-        })
-        .catch(function (error) {
-          alert("Unable to connect to GitHub");
-        });
-    };
-    
-
-function uvRating(uvi) {
-
-  if(uvi < 3 ){
-   return uvi+ ": Low".fontcolor("green")
-  } else if (uvi < 6){
-    returnuvi+ " Moderate" .fontcolor("yellow")
-  } else if(uvi < 8){
-    return uvi+" High".fontcolor("red")
-  }else if (uvi < 11){
-    return uvi+" Very High".fontcolor("black")
-  } else 
-
-  return  "uvExt";
-}
-var div = document.createElement("div");
-var litag = document.createElement("li");
-var cityTitle = document.querySelector(".cityTitle");
-var maintempUl = document.querySelector(".maintemp");
-var resultContentEl = document.querySelector(".mainTempL");
-var forecastBody = document.querySelector(".forecastBody");
-
-//display main
-var displayWeather = function (data, city) {
-  console.log(data);
-
-  cityTitle.textContent = userCity;
-
-  const resultCard = document.createElement("div");
-  resultCard.classList.add("card", "bg-light", "text-dark", "mb-3", "p-3");
-
-  const resultBody = document.createElement("div");
-  resultBody.classList.add("card-body");
-  resultCard.append(resultBody);
-
-  const titleEl = document.createElement("h3");
-  titleEl.textContent = `City: ${userCity}`;
-
-  const bodyContentEl = document.createElement("p");
-  bodyContentEl.innerHTML = `Feels like: ${data.main.feels_like}F<br>
-Temp: ${data.main.temp}F<br>
-pressure: ${data.main.pressure}<br>
-humidity ${data.main.humidity}<br>
-temp_max: ${data.main.temp_max}F<br>
-temp_min: ${data.main.temp_min}F<br>
-visibility: ${data.visibility}<br>
-${data.weather[0].main}<br>
-${data.weather[0].description}<br>`;
-// ${uvRating(data.current.uvi)}<br>
-  resultBody.append(titleEl, bodyContentEl);
-
-  resultContentEl.append(resultCard);
+    })
+    .catch(function (error) {
+      alert("coord api search failed");
+    });
 };
-//use the one call api on open weather dashboard
 
+//Api call to forecast next 4 days
+function forecastApiCall(lat, lon) {
+  // console.log("forecastApiCall")
+  const locQueryUrl = `${url}forecast?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${APIKey}`;
+  fetch(locQueryUrl)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          console.log("api call for forecast", data)
+          displayForecastWeather(data)
+        })
+      } else {
+        alert("Error: " + response.statusText)
+      }
+    })
+    .catch(function (error) {
+      alert("api forecast call failed")
+    })
+}
+
+//display current weather
+const displayCurrentWeather = function (data) {
+  for (var i = 0; i < data.length; i++) {
+    return i;
+  }
+  const dateElement = document.createElement("h3")
+  const temp = document.createElement("li")
+  const tempMax = document.createElement("li")
+  const tempMin = document.createElement("li")
+  const wind = document.createElement("li")
+  const humidity = document.createElement("li")
+  const weatherDesc = document.createElement("li")
+  const weatherIcon = document.createElement("img")
+
+  cityTitle.textContent = `Current Weather In ${userCity.charAt(0).toUpperCase() + userCity.slice(1)}`
+  dateElement.textContent = `Today's Date: ${new Date(data.dt * 1000).toLocaleDateString()}`
+  temp.textContent = "Tempature: " + data.main.temp + "°F";
+  tempMax.textContent = "Max Tempature: " + data.main.temp_max + "°F";
+  tempMin.textContent = "Minimum Tempature: " + data.main.temp_min + "°F";
+  wind.textContent = "Wind: " + data.wind.speed + " MPH"
+  humidity.textContent = "Humidity: " + data.main.humidity + " %"
+  weatherDesc.textContent = data.weather[i].description
+  weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[i].icon}@2x.png`
+  currentWeatherUl.textContent = ""
+
+  dateElement.classList.add('date')
+  temp.classList.add('currentWeatherLi');
+  tempMax.classList.add('currentWeatherLi');
+  tempMin.classList.add('currentWeatherLi');
+  wind.classList.add('currentWeatherLi');
+  humidity.classList.add('currentWeatherLi');
+  weatherDesc.classList.add('currentWeatherLi');
+  weatherIcon.classList.add("weatherIcon")
+  humidity.classList.add('currentWeatherLi');
+  console.log(data)
+  currentWeatherUl.append(dateElement, temp, tempMax, tempMin, wind, humidity, weatherDesc, weatherIcon,)
+
+  const lat = data.coord.lat
+  const lon = data.coord.lon
+  forecastApiCall(lat, lon)
+};
+
+//display forecast
+const displayForecastWeather = function (data) {
+  //start at 1 so that the forecast info starts tomorrow instead of today 
+  for (var i = 1; i < data.list.length; i++) {
+    //removing the time from date
+    let date = new Date(data.list[i].dt * 1000).toLocaleDateString()
+    let oldDate = date[3]
+
+    const forecastUl = document.querySelector(".forecastUl")
+    const dateElement = document.createElement("h3")
+    const temp = document.createElement("li")
+    const humidity = document.createElement("li")
+    const windSpeed = document.createElement("li")
+    const windGust = document.createElement("li")
+    const weatherDescription = document.createElement("li")
+    const weatherIcon = document.createElement("img")
+
+    // if data is same day splice it out all matches
+    if (date[3] === oldDate) {
+      data.list.splice(data.list >= data.list.length, 7)
+    }
+
+    temp.textContent = `Tempature: ${data.list[0].main.temp}`
+    humidity.textContent = `Humidity: ${data.list[0].main.humidity}`
+    dateElement.textContent = date
+    windSpeed.textContent = `Wind Speed: ${data.list[0].wind.speed} Mph`
+    windGust.textContent = `Wind Gust Speed: ${data.list[0].wind.gust} Mph`
+    weatherDescription.textContent = `${data.list[0].weather[0].description}`
+    weatherIcon.src = `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`
+
+    forecastUl.classList.add('forecastWeatherUl');
+    dateElement.classList.add('forecastWeatherH3');
+    temp.classList.add('forecastWeatherLi');
+    humidity.classList.add('forecastWeatherLi');
+    windSpeed.classList.add('forecastWeatherLi');
+    windGust.classList.add("forecastWeatherLi")
+    weatherDescription.classList.add("forecastWeatherLi")
+    weatherIcon.classList.add('forecastWeatherLi');
+
+    forecastUl.append(dateElement, temp, windSpeed, windGust, humidity, weatherDescription, weatherIcon)
+    // console.log("date:" , data.list)
+    // console.log('tempature: ', data.list[0].weather[0].description)  
+  }
+}
+
+//start
+const getCity = function (event) {
+  event.preventDefault();
+  // if without this new search doesnt delete old search. then data stack the old forecastUl
+  if (document.querySelector(".forecastUl")) {
+    document.querySelector(".forecastUl").textContent = ""
+  }
+  userCity = city.value.trim();
+  if (!userCity) {
+    alert("Please enter a City");
+  } else if (userCity) {
+    setCityStorage();
+    GET_CityCoordinates(userCity);
+    city.value = ""
+  }
+};
+//search weather by city
 searchCityBtn.addEventListener("click", getCity);
 
