@@ -1,19 +1,228 @@
-/* main {
+.homePageStyles {
+  border: black solid 1px;
+  border-radius: 2%;
+  background-color: ghostwhite;
+  /* background-color: ghostwhite; */
+  box-shadow: 5px 5px 5px rgb(10, 66, 85);
+  width: 25%;
+  height: 40%;
+  text-align: center;
+  padding: 10px;
+  /* then change nav class to to nav active or something to look like a actual nav after iniatl search */
+}
+
+.WeatherForecastTitle,
+a:link {
+  display: flex;
+  margin-bottom: 0%;
+  justify-content: flex-end;
+  max-width: 35vh;
+  min-width: 10vh;
+  text-align: center;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 2px;
+}
+
+.WeatherForecastTitle,
+a:visited {
+  color: rgb(0, 0, 0);
+}
+
+.WeatherForecastTitle:hover {
+  background-color: rgba(245, 245, 245, 0.795);
+  border-radius: 5%;
+  padding: 2px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: #05629c;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: -8px;
+  margin-right: -8px;
+  margin-top: -8px;
+  margin-bottom: 5px;
+  border-radius: 0.5%;
+}
+
+.user-form {
     display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: .2%;
+}
+.cityBtn {
+    margin-left: 1%;
+    border-radius: 1%;
+}
+/* added and removed classes through script.js */
+
+/* Center vertically and horizontally */
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bgImageDiv {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    to bottom,
+    #195f8a 25%,
+    #406b86 60%,
+    #f5f5f5 100%
+  );
+  opacity: 0.8;
+  /* Center and scale the image nicely */
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -3;
+}
+
+.currentPlusForecast {
+  display: flex;
+  flex-direction: column;
+  height: 100ch;
+  width: 100cm;
+}
+
+/* SEARCH HISTORY */
+
+.historyDiv {
+  /*
+text-align: left;
+padding: 0%; */
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 25vh;
+}
+
+.historyDiv p {
+  margin-bottom: 0%;
+}
+
+.searchHistoryUl {
+  max-height: 65%;
+  overflow: auto;
+  padding: 0% 0% 0% 0%;
+}
+
+.searchHistoryLink {
+  margin: 0% 0% 5% 0%;
+  width: 100%;
+  background-color: rgb(255, 255, 255, 75%);
+  list-style-type: none;
+  padding: 4px;
+}
+
+.cssStlyeDiv {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+/* CURRENT WEATHER */
+
+.currentWeather {
+  width: 75%;
+}
+
+.weatherIcon {
+  width: fit-content;
+  align-self: center;
+}
+
+.cityTitle {
+  text-align: center;
+}
+
+.currentWeatherUl {
+  text-align: center;
+  margin: 0px 0px 0px 40px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.currentWeatherLi {
+  width: 100%;
+  background-color: rgb(255, 255, 255, 75%);
+  list-style-type: none;
+  margin: 0% 0% 1% 0%;
+  border-top: black 1px solid;
+  border-bottom: black 1px solid;
+  padding: 4px;
+}
+
+/* FORECAST WEATHER */
+
+.forecastUl {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* border: black solid 2px; */
+}
+
+.forecastWeatherDayDiv {
+  background-color: rgb(94, 172, 172, 35%);
+  width: 35vh;
+  border: black solid 1px;
+  list-style-type: none;
+  margin: 1%;
+}
+
+.forecastWeatherH3 {
+  text-align: center;
+}
+
+.forecastWeatherLi {
+  margin: 0% 0% 5% 0%;
+  border-top: black 2px solid;
+  border-bottom: black 2px solid;
+  padding: 4px 4px 4px 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.title_date {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 
 
-
-
+/* 
 Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) { }
+@media (min-width: 576px) { } */
 
 /* Medium devices (tablets, 768px and up)*/
+
 /* @media (min-width: 768px) {  } */
 
 /* Large devices (desktops, 992px and up)*/
+
 /* @media (min-width: 992px){} */
 
 /* Extra large devices (large desktops, 1200px and up)*/
-/* @media (min-width: 1200px){} */ 
+
+/* @media (min-width: 1200px){} */
