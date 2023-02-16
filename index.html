@@ -1,44 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="script" href="./assets/script.js" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <title>Weather</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="script" href="./assets/script.js" />
-  <link rel="stylesheet" href="./assets/style.css" />
-  <title>Weather</title>
-</head>
+  <body>
+    <nav id="nav" class="homePageStyles centered">
+      <a class=" " href="/">
+        <h1 class="WeatherForecastTitle">Weather Forecast</h1>
+      </a>
+     
+        <form id="user-form" class="user-form centered">
+          <input
+            name="city"
+            id="city"
+            type="text"
+            autofocus="true"
+            class="form-input"
+            placeholder="Ex: Seattle"
+          />
+          <button type="submit" class="cityBtn">Search</button>
+        </form>
+   
+    </nav>
 
-<body>
-  <h1>Weather Forecast</h1>
-  <div class="card" style="width: 18rem">
-    <div class="card-body">
+    <div class="cssStlyeDiv">
+      <div class="historyDiv hidden">
+        <p class="historyPtag">History:</p>
+        <ul class="searchHistoryUl"></ul>
+      </div>
 
-      <form id="user-form" class="card-body">
-        <input name="city" id="city" type="text" autofocus="true" class="form-input" placeholder="Enter City Name" />
-        <button type="submit" class="cityBtn">Search</button>
-      </form>
+      <div class="currentWeather">
+        <ul class="currentWeatherUl"></ul>
+      </div>
     </div>
-  </div>
 
-  <div class="card weather">
-
-    <div class="card-body currentWeatherDiv">
-      <h3 class="card-title cityTitle"></h3>
-      <ul id="currentWeatherUl" class="currentWeatherUl"> </ul>
+    <div class="forecast">
+      <ul class="forecastUl"></ul>
     </div>
-  </div>
 
-  <div class="forecast">
-    <ul class="forecastUl">
+    <div class="bgImageDiv"></div>
+  </body>
 
-    </ul>
-  </div>
-</body>
-
-<script src="./assets/script.js"></script>
-
+  <script src="./assets/script.js"></script>
 </html>
 <!-- GIVEN a weather dashboard with form inputs
 WHEN I search for a city
